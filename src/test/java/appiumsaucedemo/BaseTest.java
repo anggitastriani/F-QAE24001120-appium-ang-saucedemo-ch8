@@ -1,0 +1,37 @@
+package appiumsaucedemo;
+
+import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+public class BaseTest {
+    public static AndroidDriver driver;
+    public static WebDriverWait wait;
+
+    public static void setup(){
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("platformName", "Android");
+        capabilities.setCapability("platformVersion", "13.0");
+        capabilities.setCapability("deviceName", "RR8T3060FNB");
+        capabilities.setCapability("app", "C:/Users/Plusnexus PC/Downloads/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk");
+        capabilities.setCapability("automationName", "UiAutomator2");
+        capabilities.setCapability("appActivity", "com.swaglabsmobileapp.MainActivity");
+        capabilities.setCapability("appPackage", "com.swaglabsmobileapp");
+
+        driver = new AndroidDriver(capabilities);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    }
+
+    public static void closeSession(){
+        if (driver != null){
+            driver.quit();
+        }
+    }
+
+    public static void resetApp(){
+        driver.terminateApp("com.swaglabsmobileapp");
+        driver.activateApp("com.swaglabsmobileapp");
+    }
+}
